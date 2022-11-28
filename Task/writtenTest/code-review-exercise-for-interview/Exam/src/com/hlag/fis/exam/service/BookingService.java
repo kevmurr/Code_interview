@@ -28,6 +28,11 @@ public class BookingService {
 		return repository.selectById(id);
 	}
 
+	public Optional<Booking> updateBookingState(Integer id, String state, Integer version) {
+		repository.updateBookingState(id, state, version);
+		return repository.selectById(id);
+	}
+
 	public void deleteById(Integer id) {
 		repository.delete(id);
 	}

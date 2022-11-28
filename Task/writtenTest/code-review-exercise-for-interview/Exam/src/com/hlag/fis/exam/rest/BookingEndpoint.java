@@ -60,4 +60,23 @@ public class BookingEndpoint {
 		return Response.ok(booking).build();
 	}
 
+	@PUT
+	@Consumes("application/json")
+	@Path("{booking_id}/updateState")
+	public Response updateBookingState(@PathParam("booking_id") Integer id,
+									   @QueryParam("state") String state,
+									   @QueryParam("version")Integer version) {
+		Optional<Booking> optBooking = bs.findById(id);
+		if (optBooking.isPresent) {
+			Booking booking = optBooking.get();
+			if (booking.getVersion > version) {
+				return Response.status(400).entity("You are updating the older version of the booking.").build();
+			}
+			booking = bs.updateBookingState(id, state, version);
+			return Response.status(200).entity(booking).build();
+		} else {
+			return Response.status(404).entity("Booking not found").build();
+		}
+	}
+
 }

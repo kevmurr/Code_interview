@@ -39,4 +39,11 @@ public class BookingRepository {
 		return query.getResultList();
 	}
 
+	public void updateBookingState(Integer id, String state, Integer version) {
+		Query query = entityManager.createQuery("update Booking b set b.state = :state, b.version = :version where b.id = :id");
+		query.setParameter("id", id);
+		query.setParameter("state", state);
+		query.setParameter("version", version);
+		query.executeUpdate();
+	}
 }
