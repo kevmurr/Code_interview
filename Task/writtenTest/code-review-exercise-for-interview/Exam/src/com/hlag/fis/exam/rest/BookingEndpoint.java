@@ -60,4 +60,13 @@ public class BookingEndpoint {
 		return Response.ok(booking).build();
 	}
 
+	@PUT
+	@Consumes("application/json")
+	@Path("{booking_id}")
+	public Response updateBooking(@PathParam("booking_id") Integer id,
+			@QueryParam("state") String state,
+			@QueryParam("version") Integer version) {
+		Booking booking = bs.updateStatusToAccepted(id, state, version);
+		return Response.ok(booking).build();
+	}
 }

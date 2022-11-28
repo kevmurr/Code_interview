@@ -39,4 +39,18 @@ public class BookingRepository {
 		return query.getResultList();
 	}
 
+	public Booking selectByIdAndState(Integer id, String string) {
+		TypedQuery<Booking> query = query("select b from Booking b where b.id = :id and b.state = :state");
+		query.setParameter("id", id);
+		query.setParameter("state", string);
+		return query.getResult();
+	}
+
+	public Booking updateState(Integer id, String state, Integer version) {
+		query("Update Booking b set b.state = 'ACCEPTED' where b.id = :id and state = :state and b.version = :version");
+		query.setParameter("state", state);
+		query.setParameter("id", id);
+		query.setParameter("version", version);
+		return query.getResult();
+	}
 }
